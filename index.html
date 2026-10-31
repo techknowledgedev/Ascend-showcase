@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ASCEND — level up your real life</title>
+<meta name="description" content="ASCEND is a private, game-style life system for Android: daily quests, dungeon gates, ranks E to S, coins and a monthly review. Everything stays on your phone.">
+<meta name="theme-color" content="#050914">
+<link rel="canonical" href="https://techknowledgedev.github.io/Ascend-showcase/">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ASCEND — level up your real life">
+<meta property="og:description" content="A private, game-style life system for Android. Daily quests, dungeon gates, ranks E to S, coins and a monthly review. Nothing leaves your phone.">
+<meta property="og:url" content="https://techknowledgedev.github.io/Ascend-showcase/">
+<meta property="og:image" content="https://techknowledgedev.github.io/Ascend-showcase/assets/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ASCEND — level up your real life">
+<meta name="twitter:description" content="A private, game-style life system for Android. Nothing leaves your phone.">
+<meta name="twitter:image" content="https://techknowledgedev.github.io/Ascend-showcase/assets/og.jpg">
+<link rel="stylesheet" href="assets/ui/ascend-ui.css">
+<link rel="preload" href="assets/fonts/orbitron-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/rajdhani-600.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:Orbitron;font-weight:800;font-display:swap;src:url(assets/fonts/orbitron-800.woff2) format("woff2")}
+@font-face{font-family:Orbitron;font-weight:600;font-display:swap;src:url(assets/fonts/orbitron-600.woff2) format("woff2")}
+@font-face{font-family:Rajdhani;font-weight:500;font-display:swap;src:url(assets/fonts/rajdhani-500.woff2) format("woff2")}
+@font-face{font-family:Rajdhani;font-weight:600;font-display:swap;src:url(assets/fonts/rajdhani-600.woff2) format("woff2")}
+@font-face{font-family:Rajdhani;font-weight:700;font-display:swap;src:url(assets/fonts/rajdhani-700.woff2) format("woff2")}
+:root{
+  --void:#050914;--panel:#0A1228;--panel2:#0D1A3A;--line:#1F4A8A;--line2:#3A78C4;
+  --text:#E6F3FF;--muted:#93A9C8;--gold:#FFC857;--red:#FF5470;--cyan:#7FE3FF;--blue:#3EA8FF;--green:#3DDC97;
+  --display:Orbitron,"Segoe UI",system-ui,sans-serif;--body:Rajdhani,"Segoe UI",system-ui,sans-serif;
+  --wrap:1160px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--void);color:var(--text);font-family:var(--body);font-weight:500;font-size:20px;line-height:1.5;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--cyan)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kicker{font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.38em;text-transform:uppercase;color:var(--cyan);margin:0 0 14px}
+.kicker.gold{color:var(--gold)}.kicker.red{color:#ff9db0}
+h1,h2,h3{font-family:var(--display);font-weight:800;margin:0;line-height:1.1;letter-spacing:.02em}
+h2{font-size:clamp(28px,4.4vw,52px)}
+.lead{color:var(--muted);font-size:clamp(19px,2.1vw,24px);max-width:46ch;margin:16px 0 0}
+section{position:relative;padding:112px 0}
+.bg-bloom{background:radial-gradient(900px 520px at 50% 0,rgba(26,74,154,.55),rgba(7,16,42,0) 70%)}
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.in{opacity:1;transform:none}
+
+/* nav */
+.nav{position:fixed;inset:0 0 auto 0;z-index:30;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(5,9,20,.72);border-bottom:1px solid rgba(31,74,138,.55)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:800;letter-spacing:.18em;color:var(--text);text-decoration:none;font-size:17px}
+.brand img{width:34px;height:34px}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+.nav ul a{color:var(--muted);text-decoration:none;font-weight:600;letter-spacing:.06em;font-size:17px;padding:6px 2px;border-bottom:2px solid transparent}
+.nav ul a:hover{color:var(--text);border-color:var(--line2)}
+
+/* hero */
+.hero{padding:150px 0 90px;min-height:100svh;display:flex;align-items:center;overflow:hidden}
+.hero .art{position:absolute;right:-8%;top:2%;width:min(900px,95vw);opacity:.34;pointer-events:none;-webkit-mask-image:radial-gradient(closest-side,#000 40%,transparent 100%);mask-image:radial-gradient(closest-side,#000 40%,transparent 100%)}
+#embers{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.sys{font-weight:700;letter-spacing:.2em;font-size:clamp(15px,1.6vw,19px);color:var(--text);margin:0 0 18px}
+.sys b{color:var(--cyan);font-weight:700}
+.hero h1{font-size:clamp(54px,11vw,138px);letter-spacing:.09em;background:linear-gradient(180deg,#fff 12%,#9fe3ff 62%,#3EA8FF);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 30px rgba(62,168,255,.45));margin-left:-.04em}
+.cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:14px;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;color:var(--text);padding:16px 24px;border:1.5px solid var(--line2);background:rgba(13,26,58,.7);border-radius:6px;transition:transform .2s,box-shadow .2s,border-color .2s;min-height:48px}
+.btn:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(62,168,255,.4);border-color:var(--cyan)}
+.btn.primary{background:linear-gradient(180deg,#1d5fb8,#123e82);border-color:#6bc0ff}
+.pills{display:flex;flex-wrap:wrap;gap:10px;margin:30px 0 0;padding:0;list-style:none}
+.pills li{border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-size:16px;color:var(--muted);background:rgba(10,18,40,.6)}
+.stage{position:relative;display:grid;place-items:center;perspective:1400px}
+.stage::before{content:"";position:absolute;width:90%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(62,168,255,.35),rgba(62,168,255,0) 68%)}
+
+/* phone frame */
+.phone{position:relative;width:min(100%,330px);aspect-ratio:640/1364;border-radius:44px;background:#0b1228;border:2px solid #2d62b0;padding:9px;box-shadow:0 0 90px rgba(62,168,255,.28),0 30px 70px rgba(0,0,0,.6),inset 0 0 0 7px #060b1c;transform-style:preserve-3d;will-change:transform}
+.phone .scr{position:absolute;inset:9px;border-radius:36px;overflow:hidden;background:var(--void)}
+.phone img{width:100%;height:100%;object-fit:cover}
+.hero .phone{animation:float 7s ease-in-out infinite}
+@keyframes float{50%{translate:0 -12px}}
+
+
+/* play */
+.playgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,408px);grid-template-areas:"top dev" "bot dev";grid-template-rows:1fr 1fr;column-gap:72px;row-gap:28px;align-items:center}
+.ptop{grid-area:top;align-self:end}.pbot{grid-area:bot;align-self:start}.devcol{grid-area:dev;display:grid;justify-items:center;gap:16px}
+.dev{position:relative;width:100%;border-radius:48px;background:#0b1228;border:2px solid #2d62b0;padding:9px;box-shadow:0 0 90px rgba(62,168,255,.28),0 30px 70px rgba(0,0,0,.6),inset 0 0 0 7px #060b1c}
+.devscreen{position:relative;width:100%;aspect-ratio:390/844;border-radius:40px;overflow:hidden;background:var(--void);--s:.9}
+.devscreen>.ax{position:absolute;left:0;top:0;transform:scale(var(--s));transform-origin:0 0}
+.devfallback{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.devnote{margin:0;color:#7a90b0;font-size:16px;text-align:center;max-width:36ch}
+.goals{margin:30px 0 0;padding:22px 24px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,rgba(13,26,58,.85),rgba(10,18,40,.85))}
+.goals h3{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline;font-size:14px;letter-spacing:.26em;color:var(--cyan);text-transform:uppercase;font-weight:600;margin:0 0 14px}
+.goals h3 span{letter-spacing:.08em;color:var(--muted);text-transform:none;font-family:var(--body);font-size:17px;font-weight:600}
+.goals ol{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.goals li{display:flex;gap:14px;align-items:flex-start;font-size:20px;font-weight:600;line-height:1.3;color:var(--text);transition:color .3s}
+.gmark{flex:none;width:22px;height:22px;margin-top:3px;border:2px solid var(--line2);border-radius:4px;display:grid;place-items:center;transition:background .25s,border-color .25s,box-shadow .25s}
+.gmark[data-ok]{background:var(--green);border-color:var(--green);box-shadow:0 0 16px rgba(61,220,151,.55)}
+.gmark[data-ok]::after{content:"";width:11px;height:6px;border-left:3px solid #050914;border-bottom:3px solid #050914;transform:rotate(-45deg) translate(1px,-1px)}
+.goals li.done{color:var(--muted)}
+.ctrls{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.ctrls .btn{cursor:pointer;font-family:var(--display)}
+.ctrls .btn[aria-pressed=true]{border-color:var(--gold);box-shadow:0 0 26px rgba(255,200,87,.3)}
+
+/* film */
+.film .frame{position:relative;border:1.5px solid var(--line2);border-radius:14px;overflow:hidden;box-shadow:0 0 90px rgba(62,168,255,.22),0 30px 80px rgba(0,0,0,.6);background:#000;aspect-ratio:16/9}
+.film video{width:100%;height:100%;display:block;background:#000}
+.film .note{color:var(--muted);font-size:17px;margin:16px 4px 0}
+
+/* how */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+.card{position:relative;background:linear-gradient(180deg,rgba(13,26,58,.85),rgba(10,18,40,.85));border:1px solid var(--line);border-radius:10px;padding:28px 26px;transition:transform .25s,border-color .25s,box-shadow .25s}
+.card:hover{transform:translateY(-4px);border-color:var(--line2);box-shadow:0 0 40px rgba(62,168,255,.16)}
+.card .n{font-family:var(--display);font-weight:800;font-size:46px;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--blue);margin-bottom:14px}
+.card h3{font-size:19px;letter-spacing:.06em;margin-bottom:10px}
+.card p{margin:0;color:var(--muted);font-size:19px}
+
+/* screens */
+.rail{--pad:max(24px,calc(50vw - 556px));display:flex;gap:34px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--pad);padding:20px var(--pad) 34px;margin:34px calc(50% - 50vw) 0;scrollbar-width:thin;scrollbar-color:var(--line2) transparent}
+.rail figure{margin:0;flex:0 0 auto;width:min(66vw,290px);scroll-snap-align:center}
+.rail .phone{width:100%}
+.rail figcaption{margin-top:18px;text-align:center}
+.rail figcaption b{display:block;font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.26em;color:var(--cyan);text-transform:uppercase;margin-bottom:4px}
+.rail figcaption span{color:var(--muted);font-size:17px;line-height:1.35;display:block}
+.railbtns{display:flex;gap:10px}
+.rbtn{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line2);background:rgba(13,26,58,.8);color:var(--text);font-size:22px;cursor:pointer;display:grid;place-items:center}
+.rbtn:hover{border-color:var(--cyan);box-shadow:0 0 22px rgba(62,168,255,.4)}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.privnote{color:#5B7194;font-size:15px;margin:0}
+
+/* collect */
+.collect{background:radial-gradient(900px 520px at 70% 0,rgba(110,80,16,.28),rgba(5,9,20,0) 70%)}
+.group{margin-top:56px}
+.group h3{font-size:15px;letter-spacing:.34em;color:var(--gold);text-transform:uppercase;font-family:var(--display);font-weight:600;margin:0 0 6px}
+.group p{color:var(--muted);margin:0 0 22px;font-size:18px}
+.tiles{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(var(--w,120px),1fr))}
+.tile{all:unset;box-sizing:border-box;cursor:zoom-in;display:block;text-align:center;border-radius:12px;padding:10px 6px 12px;transition:transform .25s,background .25s}
+.tile:hover,.tile:focus-visible{transform:translateY(-5px) scale(1.04);background:rgba(13,26,58,.7)}
+.tile:focus-visible{outline:3px solid var(--gold)}
+.tile img{width:100%;aspect-ratio:1;object-fit:cover;filter:drop-shadow(0 0 16px var(--g,rgba(62,168,255,.35)))}
+.tile.sq img{border-radius:16px;border:2px solid rgba(255,255,255,.1)}
+.tile span{display:block;margin-top:8px;font-size:15px;color:var(--muted);line-height:1.2;font-weight:600}
+.ranks{--w:150px}.coins{--w:170px}.titles{--w:104px}.bosses{--w:132px}.avs{--w:108px}
+.ranks .tile span{font-family:var(--display);font-size:12px;letter-spacing:.24em}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:60;display:none;place-items:center;background:rgba(3,6,15,.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:20px}
+.lb.open{display:grid;animation:fade .25s ease}
+@keyframes fade{from{opacity:0}}
+.lb .card2{position:relative;display:grid;justify-items:center;gap:6px;text-align:center;max-width:min(92vw,560px)}
+.lb .halo{position:absolute;top:0;left:50%;width:min(86vw,520px);aspect-ratio:1;translate:-50% 0;border-radius:50%;background:radial-gradient(circle,var(--g,rgba(62,168,255,.55)),transparent 66%);filter:blur(28px);opacity:.75}
+.lb .stagebox{position:relative;perspective:900px;width:min(78vw,440px);aspect-ratio:1}
+.lb img{width:100%;height:100%;object-fit:cover;transition:transform .12s ease-out;filter:drop-shadow(0 20px 40px rgba(0,0,0,.6));animation:pop .45s cubic-bezier(.2,1.3,.4,1)}
+.lb img.sq{border-radius:28px}
+@keyframes pop{from{transform:scale(.7);opacity:0}}
+.lb h3{position:relative;font-size:clamp(22px,4vw,32px);letter-spacing:.1em;margin-top:16px}
+.lb p{position:relative;margin:0;color:var(--muted);font-size:21px;max-width:34ch}
+.lb .x{position:absolute;top:18px;right:18px;width:52px;height:52px;border-radius:50%;border:1.5px solid var(--line2);background:rgba(13,26,58,.9);color:var(--text);font-size:26px;cursor:pointer}
+.lb .arr{position:absolute;top:50%;translate:0 -50%;width:52px;height:52px;border-radius:50%;border:1.5px solid var(--line2);background:rgba(13,26,58,.9);color:var(--text);font-size:24px;cursor:pointer}
+.lb .prev{left:14px}.lb .next{right:14px}
+
+/* features */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:48px}
+.grid .card .tag{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.3em;color:var(--cyan);text-transform:uppercase;margin-bottom:10px}
+.grid .card h3{font-size:19px;margin-bottom:8px;letter-spacing:.05em}
+
+/* privacy */
+.privacy .panel{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;border:1px solid var(--line);border-radius:16px;padding:56px;background:linear-gradient(135deg,rgba(13,26,58,.9),rgba(10,18,40,.7));box-shadow:0 0 90px rgba(62,168,255,.12)}
+.privacy ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.privacy li{display:flex;gap:14px;align-items:baseline;font-weight:600;font-size:22px}
+.privacy li::before{content:"";flex:none;width:12px;height:12px;border:2.5px solid var(--cyan);transform:rotate(45deg);translate:0 -2px;box-shadow:0 0 12px var(--blue)}
+.privacy li small{display:block;font-weight:500;color:var(--muted);font-size:17px}
+
+/* tech + status */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:40px}
+.fact{border-left:3px solid var(--line2);padding:6px 0 6px 18px}
+.fact b{display:block;font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.24em;color:var(--cyan);text-transform:uppercase;margin-bottom:4px}
+.fact span{color:var(--muted);font-size:18px}
+.status{text-align:center}
+.status .box{max-width:760px;margin:0 auto;border:1px solid var(--line);border-radius:14px;padding:44px 30px;background:radial-gradient(500px 220px at 50% 0,rgba(255,150,60,.16),rgba(10,18,40,.6))}
+.status img{width:120px;margin:0 auto 14px;filter:drop-shadow(0 0 30px rgba(255,140,40,.6))}
+.status p{color:var(--muted);margin:12px auto 0;max-width:52ch}
+footer{border-top:1px solid rgba(31,74,138,.55);padding:36px 0 56px;color:#5B7194;font-size:16px}
+footer .wrap{display:flex;gap:18px 30px;flex-wrap:wrap;justify-content:space-between}
+footer a{color:var(--muted)}
+
+@media (max-width:900px){
+  .playgrid{grid-template-columns:minmax(0,1fr);grid-template-areas:"top" "dev" "bot";grid-template-rows:auto;row-gap:34px;justify-items:stretch}
+  .dev{max-width:408px;margin:0 auto}
+  .ptop,.pbot{align-self:auto}
+  section{padding:84px 0}
+  .hero{padding:110px 0 70px}
+  .hero .wrap{grid-template-columns:1fr;gap:54px;text-align:left}
+  .steps{grid-template-columns:1fr}
+  .privacy .panel{grid-template-columns:1fr;padding:34px 24px;gap:30px}
+  .nav ul{gap:16px}.nav ul li.opt{display:none}
+}
+@media (max-width:520px){
+  body{font-size:19px}
+  .dev{padding:5px;border-radius:38px;box-shadow:0 0 60px rgba(62,168,255,.25),inset 0 0 0 5px #060b1c}
+  .devscreen{border-radius:32px}
+  .goals{padding:18px 18px}.goals li{font-size:19px}
+  .wrap{padding:0 18px}
+  .rail{--pad:18px}
+  .nav ul li:not(.keep){display:none}
+  .nav ul{gap:14px}.nav ul a{font-size:16px;letter-spacing:.03em}.brand{font-size:15px;letter-spacing:.14em}.brand img{width:30px;height:30px}
+  .nav ul li.priv{display:none}
+  .btn{padding:14px 18px;letter-spacing:.12em}
+  .lb .arr{width:44px;height:44px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .hero .phone{animation:none}
+  .js .reveal{opacity:1;transform:none;transition:none}
+  .lb.open,.lb img{animation:none}
+}
+</style>
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="ASCEND, back to top"><img src="assets/favicon.png" alt="" width="34" height="34"><span>ASCEND</span></a>
+    <nav aria-label="Sections"><ul>
+      <li class="keep"><a href="#play">Play</a></li>
+      <li class="keep"><a href="#film">Film</a></li>
+      <li class="keep"><a href="#screens">Screens</a></li>
+      <li class="opt"><a href="#collect">Collect</a></li>
+      <li class="opt"><a href="#features">Features</a></li>
+      <li class="keep priv"><a href="#privacy">Privacy</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <img class="art" src="assets/art/phoenix_rise.webp" alt="" width="900" height="900" fetchpriority="high">
+  <canvas id="embers" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div>
+      <p class="sys"><b>[ SYSTEM ]</b>&nbsp; LEVEL UP YOUR REAL LIFE</p>
+      <h1>ASCEND</h1>
+      <p class="lead">A private, game-style life system for Android. Clear daily quests, take on dungeon gates, climb from rank E to S, and earn coins you can spend. All of it runs on your phone.</p>
+      <div class="cta">
+        <a class="btn primary" href="#play">Try it in your browser</a>
+        <a class="btn" href="#film">▶ Watch the film</a>
+        <a class="btn" href="#screens">See the screens</a>
+      </div>
+      <ul class="pills" aria-label="Highlights">
+        <li>Android 9+</li><li>No account</li><li>No ads</li><li>Nothing uploaded</li>
+      </ul>
+    </div>
+    <div class="stage">
+      <div class="phone" id="heroPhone"><div class="scr"><img src="assets/shots/status.webp" alt="The ASCEND Status screen: level, XP bar, coins, a seven-day streak and the daily quests all cleared." width="640" height="1364"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PLAY -->
+<section class="play bg-bloom" id="play">
+  <div class="wrap playgrid">
+    <div class="ptop">
+      <p class="kicker reveal">Try it</p>
+      <h2 class="reveal">Play a day in ASCEND.</h2>
+      <p class="lead reveal">The app's own layout and artwork, running in your browser. Clear quests, sync the watch, take on the boss. Nothing is saved or sent.</p>
+    </div>
+    <div class="devcol">
+      <div class="dev">
+        <div class="devscreen" id="axfit">
+          <img class="devfallback" src="assets/shots/status.webp" alt="" width="640" height="1364" loading="lazy">
+          <div class="ax" id="axhost" role="group" aria-label="Playable ASCEND demo phone"></div>
+        </div>
+      </div>
+      <p class="devnote">A browser demo of the app's screens. The real thing runs on Android.</p>
+    </div>
+    <div class="pbot">
+      <div class="goals reveal" role="group" aria-labelledby="goalhead">
+        <h3 id="goalhead">Five things to try <span id="goalcount">0 of 5 cleared</span></h3>
+        <ol>
+          <li data-goal="tick"><span class="gmark" aria-hidden="true"></span><span>Open <b>Quests</b> and clear one</span></li>
+          <li data-goal="sync"><span class="gmark" aria-hidden="true"></span><span>Sync your watch on the <b>Health</b> tab</span></li>
+          <li data-goal="clear"><span class="gmark" aria-hidden="true"></span><span>Clear all six quests and claim your reward</span></li>
+          <li data-goal="strike"><span class="gmark" aria-hidden="true"></span><span>Strike the boss in the <b>Dungeon</b></span></li>
+          <li data-goal="crest"><span class="gmark" aria-hidden="true"></span><span>Open <b>More</b> and enlarge a crest or coin</span></li>
+        </ol>
+      </div>
+      <div class="ctrls">
+        <button class="btn" id="axsound" type="button" aria-pressed="false"><span>Sound and haptics off</span></button>
+        <button class="btn" id="axreset" type="button">Reset demo</button>
+      </div>
+      <noscript><p class="note">The playable demo needs JavaScript. The screens section below shows the same app in screenshots.</p></noscript>
+    </div>
+  </div>
+  <div id="axlive" class="sr" role="status" aria-live="polite"></div>
+</section>
+
+<!-- FILM -->
+<section class="film bg-bloom" id="film">
+  <div class="wrap">
+    <p class="kicker reveal">The film</p>
+    <h2 class="reveal">Forty seconds of ASCEND.</h2>
+    <p class="lead reveal">Quests, a level-up, a boss gate and the splash, drawn from the app's own design system and cut to a soundtrack that was synthesised from scratch.</p>
+    <div class="frame reveal" style="margin-top:40px">
+      <video controls playsinline preload="metadata" poster="assets/video/poster.jpg" aria-label="ASCEND showcase film, 40 seconds">
+        <source src="assets/video/ascend-showcase.mp4" type="video/mp4">
+        Your browser can't play this video. <a href="assets/video/ascend-showcase.mp4">Download the film</a>.
+      </video>
+    </div>
+    <p class="note">Sound on. The screens in the film are drawn from the same design files as the playable demo above; the last scene shows real screenshots.</p>
+  </div>
+</section>
+
+<!-- HOW IT PLAYS -->
+<section id="how">
+  <div class="wrap">
+    <p class="kicker reveal">How it plays</p>
+    <h2 class="reveal">Your day, as a game.</h2>
+    <div class="steps">
+      <article class="card reveal"><div class="n">01</div><h3>Set your quests</h3><p>Build a daily list: a workout, a step goal, focus time, a few pages, a line in your journal, or anything of your own.</p></article>
+      <article class="card reveal"><div class="n">02</div><h3>Clear the day</h3><p>Each quest pays XP and coins. Clear the list and the day counts toward your streak. A freeze can save a bad day.</p></article>
+      <article class="card reveal"><div class="n">03</div><h3>Level up</h3><p>XP becomes levels, levels become ranks from E up to S, and milestones unlock titles with their own crests.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENS -->
+<section id="screens" class="bg-bloom">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <p class="kicker reveal">Screens</p>
+        <h2 class="reveal">Straight from the phone.</h2>
+      </div>
+      <div class="railbtns" aria-label="Scroll the screens">
+        <button class="rbtn" id="rprev" aria-label="Previous screens">←</button>
+        <button class="rbtn" id="rnext" aria-label="Next screens">→</button>
+      </div>
+    </div>
+    <div class="rail" id="rail" tabindex="0" role="group" aria-label="App screenshots, scroll sideways">
+      <figure><div class="phone"><div class="scr"><img loading="lazy" src="assets/shots/status.webp" alt="Status screen with level, XP, coins and daily quests" width="640" height="1364"></div></div><figcaption><b>Status</b><span>Level, XP, coins, streak and today's quests in one place.</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img loading="lazy" src="assets/shots/levelup.webp" alt="Level up screen showing level 1 to 2" width="640" height="1364"></div></div><figcaption><b>Level up</b><span>A payoff at the end of a good day.</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img loading="lazy" src="assets/shots/dayclear.webp" alt="Day cleared screen with XP, streak, coins earned and new titles" width="640" height="1364"></div></div><figcaption><b>Day cleared</b><span>XP, streak, coins and any new titles.</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img loading="lazy" src="assets/shots/dungeon.webp" alt="Dungeon screen with a seven day gate, boss health and locked higher rank gates" width="640" height="1364"></div></div><figcaption><b>Dungeon</b><span>Multi-day gates with a boss and a strike quest each day.</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img loading="lazy" src="assets/shots/stats.webp" alt="Stats screen with a six-point radar chart and stat points to spend" width="640" height="1364"></div></div><figcaption><b>Stats</b><span>Six stats that grow as you do. Spend points to shape them.</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img loading="lazy" src="assets/shots/month.webp" alt="Monthly review with a calendar of cleared days and the month in numbers" width="640" height="1364"></div></div><figcaption><b>Monthly review</b><span>The month on one page, with a PDF to keep.</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img loading="lazy" src="assets/shots/totals.webp" alt="Totals screen with level, rank, streak and lifetime numbers" width="640" height="1364"></div></div><figcaption><b>Your totals</b><span>Steps, distance, focus time and pages, added up on the phone.</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img loading="lazy" src="assets/shots/more.webp" alt="More hub with a profile card, ready now, train and progress tiles" width="640" height="1364"></div></div><figcaption><b>More hub</b><span>What's ready now, plus training, progress and rewards.</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img loading="lazy" src="assets/shots/more2.webp" alt="More hub lower half with titles, wallet and system settings" width="640" height="1364"></div></div><figcaption><b>Titles and wallet</b><span>Your crests, your coins and every setting in one list.</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img loading="lazy" src="assets/shots/alerts.webp" alt="Notifications list showing a title unlocked and a reminder" width="640" height="1364"></div></div><figcaption><b>Alerts</b><span>A log of what ASCEND sent you and nothing else.</span></figcaption></figure>
+    </div>
+    <p class="privnote">Screenshots show the developer's own test data.</p>
+  </div>
+</section>
+
+<!-- COLLECT -->
+<section id="collect" class="collect">
+  <div class="wrap">
+    <p class="kicker gold reveal">Collect</p>
+    <h2 class="reveal">Crests, coins and bosses.</h2>
+    <p class="lead reveal">Everything you earn has its own artwork. Tap any one to take a closer look.</p>
+
+    <div class="group reveal"><h3>Ranks</h3><p>Six ranks, one crest each. Locked ones stay dim until you get there.</p>
+      <div class="tiles ranks" id="g-ranks"></div></div>
+    <div class="group reveal"><h3>Coins</h3><p>100 copper make a silver, 100 silver make a gold. One copper is worth 1 unit of whatever currency you choose.</p>
+      <div class="tiles coins" id="g-coins"></div></div>
+    <div class="group reveal"><h3>Titles</h3><p>Seventeen titles to unlock, from Newcomer to Elite.</p>
+      <div class="tiles titles" id="g-titles"></div></div>
+    <div class="group reveal"><h3>Dungeon bosses</h3><p>Seven bosses that stand in for the habits you're fighting.</p>
+      <div class="tiles bosses" id="g-bosses"></div></div>
+    <div class="group reveal"><h3>Avatars</h3><p>Pick the face of your hunter.</p>
+      <div class="tiles avs" id="g-avs"></div></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="bg-bloom">
+  <div class="wrap">
+    <p class="kicker reveal">What's inside</p>
+    <h2 class="reveal">More than a checklist.</h2>
+    <div class="grid">
+      <article class="card reveal"><div class="tag">Quests</div><h3>Daily quests</h3><p>Set the list once. Quests pay XP and coins, grow a linked stat and keep your streak alive.</p></article>
+      <article class="card reveal"><div class="tag">Dungeon</div><h3>Gates and bosses</h3><p>Seven-day gates with a boss and a strike quest each day. Harder gates open as you level.</p></article>
+      <article class="card reveal"><div class="tag">Rewards</div><h3>Coins and a reward shop</h3><p>Copper, silver and gold. Stock the shop with your own rewards and spend what you've earned.</p></article>
+      <article class="card reveal"><div class="tag">Health</div><h3>Health Connect</h3><p>Steps, distance, sleep and heart rate from your watch can clear quests for you. ASCEND only reads, never writes.</p></article>
+      <article class="card reveal"><div class="tag">Insight</div><h3>Insights and monthly review</h3><p>Patterns show up after two weeks of history. Each month gets a one-page review with a PDF.</p></article>
+      <article class="card reveal"><div class="tag">Train</div><h3>Focus, books and journal</h3><p>A focus timer, a book log and a one-line nightly journal, each feeding your totals.</p></article>
+      <article class="card reveal"><div class="tag">Reminders</div><h3>Widgets and notifications</h3><p>Home-screen widgets and reminders you control, all scheduled on the phone itself.</p></article>
+      <article class="card reveal"><div class="tag">Feel</div><h3>Sound and motion</h3><p>Splash, badge and coin sounds are generated from maths, with a volume control and an off switch.</p></article>
+      <article class="card reveal"><div class="tag">Safe</div><h3>Backups you keep</h3><p>Backups are ordinary files on your phone and you decide where they go. A gentle nudge reminds you to make one.</p></article>
+      <article class="card reveal"><div class="tag">Access</div><h3>Built for TalkBack</h3><p>Screens are labelled so a screen reader can read every card, button and number.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section id="privacy" class="privacy">
+  <div class="wrap">
+    <div class="panel reveal">
+      <div>
+        <p class="kicker">Private by design</p>
+        <h2>Your data never leaves your phone.</h2>
+        <p class="lead">ASCEND keeps your name, quests, progress and rewards in the app's private storage. Uninstalling removes them.</p>
+        <div class="cta"><a class="btn" href="privacy.html">Read the privacy policy</a></div>
+      </div>
+      <ul>
+        <li><span>No account<small>There's nothing to sign up for.</small></span></li>
+        <li><span>No server<small>Nothing is uploaded, anywhere.</small></span></li>
+        <li><span>No ads, no analytics<small>No trackers of any kind.</small></span></li>
+        <li><span>Health data stays read-only<small>Steps, sleep and heart rate are read, never shared.</small></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- UNDER THE HOOD -->
+<section id="tech" class="bg-bloom">
+  <div class="wrap">
+    <p class="kicker reveal">Under the hood</p>
+    <h2 class="reveal">Small, native and tested.</h2>
+    <div class="facts">
+      <div class="fact reveal"><b>Native Android</b><span>Written in Kotlin with Jetpack Compose. Runs on Android 9 and newer.</span></div>
+      <div class="fact reveal"><b>Logic you can trust</b><span>The game rules are plain Kotlin, checked by hundreds of automated tests.</span></div>
+      <div class="fact reveal"><b>Automated builds</b><span>Every build is compiled by GitHub Actions, so there is no hand-made installer.</span></div>
+      <div class="fact reveal"><b>Made, not downloaded</b><span>Sound effects are synthesised in code and the fonts, Orbitron and Rajdhani, are open source.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATUS -->
+<section class="status">
+  <div class="wrap">
+    <div class="box reveal">
+      <img src="assets/art/phoenix.webp" alt="" width="120" height="120" loading="lazy">
+      <p class="kicker" style="margin-bottom:6px">Where it stands</p>
+      <h2 style="font-size:clamp(26px,4vw,40px)">A personal project, v0.12.</h2>
+      <p>ASCEND is built for one phone and shown here for the love of it.</p>
+      <p>Questions or thoughts? <a href="https://github.com/techknowledgedev/Ascend-showcase/issues">Open an issue on GitHub</a>.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>ASCEND · a personal project</span>
+    <span><a href="privacy.html">Privacy policy</a> · Fonts: Orbitron and Rajdhani, SIL Open Font License</span>
+  </div>
+</footer>
+
+<!-- lightbox -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Enlarged picture" hidden>
+  <button class="x" id="lbx" aria-label="Close">✕</button>
+  <button class="arr prev" id="lbp" aria-label="Previous">←</button>
+  <button class="arr next" id="lbn" aria-label="Next">→</button>
+  <div class="card2">
+    <div class="halo" id="lbh"></div>
+    <div class="stagebox" id="lbs"><img id="lbi" alt=""></div>
+    <h3 id="lbt"></h3>
+    <p id="lbl"></p>
+  </div>
+</div>
+
+<script src="assets/ui/ascend-ui.js" defer></script>
+<script src="assets/ui/ascend-app.js" defer></script>
+<script>
+(function(){
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- gallery data ---- */
+  var A = 'assets/art/';
+  var RANKS = [
+    ['e','Rank E','Where every hunter starts. Levels 1 to 4.','#93A9C8'],['d','Rank D','Reach level 5.','#3DDC97'],['c','Rank C','Reach level 10.','#3EA8FF'],
+    ['b','Rank B','Reach level 20.','#B48CFF'],['a','Rank A','Reach level 35.','#FFC857'],['s','Rank S','Reach level 50. The summit.','#FF5470']];
+  var COINS = [['copper','Copper','1 copper is worth 1 unit of your currency.','#E59A5B'],['silver','Silver','100 copper make one silver.','#D8E4F2'],['gold','Gold','100 silver make one gold.','#FFC857']];
+  var TITLES = [
+    ['newcomer','Newcomer','Everyone starts here.'],['first_step','First Step','Clear your first day.'],['getting_started','Getting Started','Complete 10 quests.'],
+    ['week_warrior','Week Warrior','Reach a 7 day streak.'],['iron_will','Iron Will','Reach level 7.'],['fortnight','Fortnight','Reach a 14 day streak.'],
+    ['bookworm','Bookworm','Finish a book.'],['sage','Sage','Reach Intellect 20.'],['gate_breaker','Gate Breaker','Clear a dungeon gate.'],
+    ['month_master','Month Master','Reach a 30 day streak.'],['habit_forged','Habit Forged','Reach a 66 day streak.'],['gate_warden','Gate Warden','Clear a D-rank gate.'],
+    ['gate_master','Gate Master','Clear a C-rank gate.'],['quest_runner','Quest Runner','Complete 100 quests.'],['veteran','Veteran','Reach level 10.'],
+    ['elite','Elite','Reach level 20.'],['treasure_keeper','Treasure Keeper','Hold 25 silver.']];
+  var BOSSES = [['golem','The Procrastination Golem'],['wraith','The Distraction Wraith'],['hydra','The Excuse Hydra'],['shadow','The Self-Doubt Shadow'],['demon','The Temptation Demon'],['dragon','The Burnout Dragon'],['lich','The Stagnation Lich']];
+  var AVS = ['shadow','knight','mage','rogue','phoenix','blade','wolf','monarch'];
+  var cap = function(s){return s.charAt(0).toUpperCase()+s.slice(1)};
+
+  var groups = {}; // id -> [{src,title,line,glow,sq}]
+  function build(id, items){
+    var host = document.getElementById(id); groups[id] = items;
+    items.forEach(function(it, i){
+      var b = document.createElement('button');
+      b.className = 'tile' + (it.sq ? ' sq' : ''); b.type = 'button';
+      b.style.setProperty('--g', it.glow);
+      b.setAttribute('aria-label', 'Enlarge ' + it.title);
+      b.innerHTML = '<img loading="lazy" decoding="async" width="160" height="160" alt=""><span></span>';
+      b.firstChild.src = it.thumb || it.src; b.lastChild.textContent = it.label || it.title;
+      b.addEventListener('click', function(){ openLb(id, i, b); });
+      host.appendChild(b);
+    });
+  }
+  build('g-ranks', RANKS.map(function(r){return {src:A+'badge_rank_'+r[0]+'.webp',title:r[1],line:r[2],glow:r[3]+'99',label:r[1].toUpperCase()}}));
+  build('g-coins', COINS.map(function(c){return {src:A+'coin_'+c[0]+'.webp',title:c[1],line:c[2],glow:c[3]+'88',label:c[1]}}));
+  build('g-titles', TITLES.map(function(t){return {src:A+'badge_title_'+t[0]+'.webp',title:t[1],line:t[2],glow:'rgba(62,168,255,.6)',label:t[1]}}));
+  build('g-bosses', BOSSES.map(function(b){return {src:A+'boss_'+b[0]+'.webp',title:b[1],line:'A boss for the habit you want to beat.',glow:'rgba(255,84,112,.6)',sq:1,label:b[1].replace('The ','')}}));
+  build('g-avs', AVS.map(function(a){return {src:A+'avatar_'+a+'.webp',title:cap(a),line:'An avatar for your hunter.',glow:'rgba(62,168,255,.6)',sq:1,label:cap(a)}}));
+
+  /* ---- lightbox ---- */
+  var lb = document.getElementById('lb'), li = document.getElementById('lbi'), lt = document.getElementById('lbt'),
+      ll = document.getElementById('lbl'), lh = document.getElementById('lbh'), ls = document.getElementById('lbs');
+  var cur = {g:null,i:0,opener:null};
+  function show(){
+    var it = groups[cur.g][cur.i];
+    li.classList.remove('sq'); if (it.sq) li.classList.add('sq');
+    li.style.animation = 'none'; void li.offsetWidth; li.style.animation = '';
+    li.src = it.src; li.alt = it.title; lt.textContent = it.title; ll.textContent = it.line;
+    lh.style.setProperty('--g', it.glow); li.style.transform = '';
+  }
+  function openLb(g, i, opener){
+    cur = {g:g,i:i,opener:opener}; lb.hidden = false; lb.classList.add('open'); show();
+    document.body.style.overflow = 'hidden'; document.getElementById('lbx').focus();
+  }
+  function closeLb(){
+    lb.classList.remove('open'); lb.hidden = true; document.body.style.overflow = '';
+    if (cur.opener) cur.opener.focus();
+  }
+  function step(d){ var n = groups[cur.g].length; cur.i = (cur.i + d + n) % n; show(); }
+  document.getElementById('lbx').addEventListener('click', closeLb);
+  document.getElementById('lbp').addEventListener('click', function(){step(-1)});
+  document.getElementById('lbn').addEventListener('click', function(){step(1)});
+  lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', function(e){
+    if (lb.hidden) return;
+    if (e.key === 'Escape') closeLb();
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
+    else if (e.key === 'Tab'){ // keep focus inside the dialog
+      var f = lb.querySelectorAll('button'); var first = f[0], last = f[f.length-1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  });
+  if (!RM) ls.addEventListener('pointermove', function(e){
+    var r = ls.getBoundingClientRect(), x = (e.clientX - r.left)/r.width - .5, y = (e.clientY - r.top)/r.height - .5;
+    li.style.transform = 'rotateY('+(x*18).toFixed(1)+'deg) rotateX('+(-y*18).toFixed(1)+'deg) scale(1.03)';
+  });
+  if (!RM) ls.addEventListener('pointerleave', function(){ li.style.transform = ''; });
+
+  /* ---- reveal on scroll ---- */
+  var rv = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !RM){
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {rootMargin:'0px 0px -8% 0px',threshold:.08});
+    rv.forEach(function(el, i){ el.style.transitionDelay = ((i % 4) * 70) + 'ms'; io.observe(el); });
+  } else rv.forEach(function(el){ el.classList.add('in'); });
+
+  /* ---- screens rail buttons ---- */
+  var rail = document.getElementById('rail');
+  function slide(d){ rail.scrollBy({left: d * Math.min(rail.clientWidth * .8, 640), behavior: RM ? 'auto' : 'smooth'}); }
+  document.getElementById('rprev').addEventListener('click', function(){slide(-1)});
+  document.getElementById('rnext').addEventListener('click', function(){slide(1)});
+  rail.addEventListener('keydown', function(e){ if (e.key === 'ArrowRight') { slide(1); e.preventDefault(); } if (e.key === 'ArrowLeft') { slide(-1); e.preventDefault(); } });
+
+  /* ---- hero phone tilt (fine pointers only) ---- */
+  var hp = document.getElementById('heroPhone');
+  if (!RM && window.matchMedia && matchMedia('(pointer:fine)').matches){
+    document.querySelector('.hero').addEventListener('pointermove', function(e){
+      var x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5;
+      hp.style.transform = 'rotateY('+(x*-18).toFixed(1)+'deg) rotateX('+(y*10).toFixed(1)+'deg)';
+    });
+  }
+
+  /* ---- embers ---- */
+  var cv = document.getElementById('embers');
+  if (cv && !RM){
+    var c = cv.getContext('2d'), W, H, dpr = Math.min(devicePixelRatio || 1, 2), P = [], run = true, last = 0;
+    function size(){ var r = cv.getBoundingClientRect(); W = r.width; H = r.height; cv.width = W*dpr; cv.height = H*dpr; c.setTransform(dpr,0,0,dpr,0,0); }
+    function mk(first){ return {x:Math.random()*W,y:first?Math.random()*H:H+10,r:1+Math.random()*2.6,v:14+Math.random()*34,s:Math.random()*6.28,a:.25+Math.random()*.55}; }
+    size(); var n = Math.round(Math.min(70, W/22)); for (var i=0;i<n;i++) P.push(mk(true));
+    addEventListener('resize', size);
+    new IntersectionObserver(function(es){ run = es[0].isIntersecting; if (run) requestAnimationFrame(tick); }).observe(cv);
+    function tick(t){
+      if (!run) return; var dt = Math.min(.05, (t - last)/1000 || .016); last = t;
+      c.clearRect(0,0,W,H);
+      for (var i=0;i<P.length;i++){ var p = P[i]; p.y -= p.v*dt; p.x += Math.sin(t/900 + p.s)*.3; if (p.y < -10) P[i] = mk(false);
+        var tw = .6 + .4*Math.sin(t/300 + p.s); var g = c.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*4);
+        g.addColorStop(0,'rgba(255,200,110,'+(p.a*tw)+')'); g.addColorStop(1,'rgba(255,110,40,0)'); c.fillStyle = g; c.beginPath(); c.arc(p.x,p.y,p.r*4,0,6.283); c.fill(); }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+})();
+</script>
+</body>
+</html>
