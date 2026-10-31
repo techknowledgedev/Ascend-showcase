@@ -37,7 +37,7 @@
     { k: 'meditate', name: 'Meditate 10 min', short: 'Meditate', stat: 'SEN', xp: 20, how: 'By hand', step: 2 },
     { k: 'read', name: 'Read 20 pages', short: 'Read', stat: 'INT', xp: 30, how: 'By hand', step: 3 },
     { k: 'walk', name: 'Walk 8,000 steps', short: 'Walk', stat: 'AGI', xp: 30, how: 'Auto · phone', auto: true },
-    { k: 'sleep', name: 'Sleep 7 hours', short: 'Sleep', stat: 'VIT', xp: 30, how: 'Auto · watch', auto: true },
+    { k: 'sleep', name: 'Sleep 7 hours', short: 'Sleep', stat: 'VIT', xp: 30, how: 'Auto · sleep log', auto: true },
     { k: 'deep', name: 'Deep work 2 hours', short: 'Deep work', stat: 'DIS', xp: 50, how: 'By hand', hard: true }
   ];
   var STATN = ['STR', 'INT', 'VIT', 'AGI', 'SEN', 'DIS'];
@@ -126,7 +126,7 @@
         '<div class="split cap14"><span>' + (left.length > 3 ? 'Left: ' + left.slice(0, 2).join(', ') + ' and ' + (left.length - 2) + ' more' : left.length ? 'Left: ' + left.join(', ') : 'All done') + '</span><span style="color:var(--cyan)">+' + D.xpToday + ' XP today</span></div>' +
       '</button>' +
       '<button class="pn link" data-a="tab" data-v="health" data-k="hcard">' +
-        '<div class="split"><span class="lab g">TODAY\'S HEALTH</span><span class="cap14">' + (S.synced ? 'Synced just now' : 'Synced 20 min ago') + '</span></div>' +
+        '<div class="split"><span class="lab g">TODAY\'S HEALTH</span><span class="cap14">' + (S.synced ? 'Sleep logged just now' : 'Counting on this phone') + '</span></div>' +
         '<div class="m3"><div><b>' + fmt(S.steps) + '</b><span>steps</span></div><div><b>' + hm(S.sleep) + '</b><span>sleep</span></div><div><b>64</b><span>resting bpm</span></div></div>' +
       '</button>' +
       '<button class="pn link" data-a="stats" data-k="scard">' +
@@ -170,9 +170,9 @@
         '<div class="ql">' + [3, 4, 5].map(function (i) { return qrow(S, D, i, -1); }).join('') + '</div>' +
         (S.closed ? '<div class="nt">Day cleared. Six new quests arrive tomorrow. Reset the demo to play it again.</div>'
           : D.all ? '<button class="xb gold" data-a="collect" data-k="collect">COLLECT REWARD</button>'
-          : '<div class="nt">Steps and sleep clear on their own: open Health and sync. Tap the rest when done. Finish every routine step for +20 XP. Hard Mode: miss it and lose double XP.</div>');
+          : '<div class="nt">Steps clear on their own, and sleep clears once you log it on the Health tab. Tap the rest when done. Finish every routine step for +20 XP. Hard Mode: miss it and lose double XP.</div>');
     } else {
-      var manage = [['Workout 30 min', 'Daily · Strength · 40 XP · Morning step 1'], ['Walk 8,000 steps', 'Daily · Agility · auto from phone'], ['Read 20 pages', 'Daily · Intellect · 30 XP · Morning step 3'], ['Sleep 7 hours', 'Daily · Vitality · auto from watch'], ['Meditate 10 min', 'Daily · Sense · 20 XP · Morning step 2'], ['Deep work 2 hours', 'Daily · Discipline · Hard Mode'], ['Long run 5 km', 'Weekly · Saturday · Strength · 60 XP'], ['Weekly review', 'Weekly · Sunday · Discipline · 40 XP']];
+      var manage = [['Workout 30 min', 'Daily · Strength · 40 XP · Morning step 1'], ['Walk 8,000 steps', 'Daily · Agility · auto from phone'], ['Read 20 pages', 'Daily · Intellect · 30 XP · Morning step 3'], ['Sleep 7 hours', 'Daily · Vitality · from your sleep log'], ['Meditate 10 min', 'Daily · Sense · 20 XP · Morning step 2'], ['Deep work 2 hours', 'Daily · Discipline · Hard Mode'], ['Long run 5 km', 'Weekly · Saturday · Strength · 60 XP'], ['Weekly review', 'Weekly · Sunday · Discipline · 40 XP']];
       body = '<div class="ql">' + manage.map(function (m) { return '<button class="row2" style="min-height:56px;padding:4px 14px;border-color:var(--line)" data-a="soon" data-v="Quest editor" data-k="m' + m[0] + '"><span><b style="font-size:17px">' + m[0] + '</b><span class="cap14" style="font-weight:600">' + m[1] + '</span></span>' + ico('chev', 20, 2, 'color:#93a9c8') + '</button>'; }).join('') + '</div>';
     }
     return '<div class="body enter" data-sc="quests">' +
@@ -209,16 +209,16 @@
     var st = S.steps, sl = S.sleep;
     return '<div class="body enter" data-sc="health">' +
       '<div class="hd"><span class="ttl">HEALTH</span></div>' +
-      '<div class="sysline" style="border-left-color:var(--green)"><span><span class="tg" style="color:var(--green)">[ SYSTEM ]</span>' + (S.synced ? 'Watch synced just now.' : 'Connected. Watch synced 20 min ago.') + '</span></div>' +
+      '<div class="sysline" style="border-left-color:var(--green)"><span><span class="tg" style="color:var(--green)">[ SYSTEM ]</span>' + (S.synced ? 'Sleep logged just now.' : 'Counting on this phone · updated 2 min ago.') + '</span></div>' +
       '<div class="pn"><div class="split"><span class="lab g">STEPS</span><span class="cap14">From phone</span></div><div class="bigv">' + fmt(st) + '</div>' +
         '<div class="goalbar"><i data-bar="steps" style="width:' + Math.min(100, st / 8000 * 100).toFixed(1) + '%"></i></div>' +
         '<span class="cap14">' + (st >= 8000 ? 'of 8,000 · quest cleared' : 'of 8,000 · ' + fmt(8000 - st) + ' to go') + '</span></div>' +
-      '<div class="pn"><div class="split"><span class="lab g">SLEEP</span><span class="cap14">From watch · 23:10 to 06:22</span></div><div class="bigv">' + hm(sl) + '</div>' +
+      '<div class="pn"><div class="split"><span class="lab g">SLEEP</span><span class="cap14">Typed in by you</span></div><div class="bigv">' + hm(sl) + '</div>' +
         '<div class="goalbar"><i data-bar="sleep" style="width:' + Math.min(100, sl / 420 * 100).toFixed(1) + '%"></i></div>' +
-        '<span class="cap14">' + (sl >= 420 ? 'of 7h · quest cleared' : sl ? 'of 7h' : 'Not synced yet · of 7h') + '</span></div>' +
-      '<div class="pn"><div class="split"><span class="lab g">HEART</span><span class="cap14">From watch</span></div><div class="m3"><div><b>64</b><span>resting bpm</span></div><div><b>52</b><span>lowest, asleep</span></div><div><b>148</b><span>peak, workout</span></div></div></div>' +
-      (S.synced ? '<div class="xb ghost" role="status" style="cursor:default">SYNCED JUST NOW</div>' : '<button class="xb blue" data-a="sync" data-k="sync">' + ico('sync', 20) + 'SYNC WATCH</button>') +
-      '<div class="nt">ASCEND only reads this data, never writes it. Steps and sleep clear their quests on their own.</div>' +
+        '<span class="cap14">' + (sl >= 420 ? 'of 7h · quest cleared' : sl ? 'of 7h' : 'Not logged yet · of 7h') + '</span></div>' +
+      '<div class="pn"><div class="split"><span class="lab g">HEART</span><span class="cap14">Typed in by you</span></div><div class="m3"><div><b>64</b><span>resting bpm</span></div></div></div>' +
+      (S.synced ? '<div class="xb ghost" role="status" style="cursor:default">SLEEP LOGGED</div>' : '<button class="xb blue" data-a="sync" data-k="sync">' + ico('plus', 20) + 'LOG LAST NIGHT\'S SLEEP</button>') +
+      '<div class="nt">Steps are counted on this phone. Sleep and heart rate you type in. Everything stays on this phone.</div>' +
     '</div>';
   };
 

@@ -75,7 +75,7 @@
       case 'quest':
         q = U.QUESTS[+v];
         if (S.closed) { toast('Day cleared. Reset the demo to play it again.'); break; }
-        if (q.auto) { toast(S.synced ? 'Cleared by your phone and watch.' : 'This one clears itself. Open Health and sync your watch.'); break; }
+        if (q.auto) { toast(S.synced ? 'Cleared by your phone and your sleep log.' : 'This one clears itself. Open Health and log last night\'s sleep.'); break; }
         was = S.done[+v]; S.done[+v] = !was; S.pop = +v; render(); S.pop = null;
         if (!was) {
           goal('tick'); sfx('done'); buzz(12);
@@ -108,7 +108,7 @@
       case 'sync':
         S.synced = true; S.steps = 8640; S.sleep = 432; if (!S.closed) { S.done[3] = true; S.done[4] = true; }
         render(); goal('sync'); sfx('done'); setTimeout(function () { sfx('done'); }, 140);
-        toast(S.closed ? 'Watch synced.' : 'Steps and sleep cleared on their own. +60 XP.', 'gold', 2800);
+        toast(S.closed ? 'Sleep logged.' : 'Sleep logged. Steps and sleep cleared. +60 XP.', 'gold', 2800);
         if (U.derive(S).all && !S.closed) setTimeout(function () { toast('All daily quests cleared. Reward available.', 'gold'); sfx('all'); }, 2900);
         break;
       case 'view-crest': lastK = k; S.viewer = v; render(); sfx('badge'); goal('crest'); break;
