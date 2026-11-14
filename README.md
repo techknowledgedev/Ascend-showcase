@@ -11,7 +11,7 @@ This repo holds only the page, the playable demo, the 40 second film and the art
 | Path | What it is |
 | --- | --- |
 | `index.html` | The whole page. Plain HTML, CSS and a little JavaScript. No build step. |
-| `privacy.html` | The ASCEND privacy policy. |
+| `privacy.html` | The ASCEND privacy policy. Generated from the app's `docs/PRIVACY.md`, so change the policy there and regenerate this file, not by hand. Its address is entered in Play Console and opened from the app. |
 | `assets/ui/` | The playable demo on the page: a small replica of the app's screens drawn from its design system (`ascend-ui.css`, `ascend-ui.js`) and the page's own glue code (`ascend-app.js`). It stores and sends nothing. |
 | `assets/video/` | The film (720p MP4) and its poster. |
 | `assets/shots/` | Screenshots from the app, status bar cropped. |
