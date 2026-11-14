@@ -14,20 +14,55 @@ body{margin:0;background:radial-gradient(900px 480px at 50% 0,rgba(26,74,154,.5)
 main{max-width:760px;margin:0 auto;padding:56px 22px 90px}
 a{color:var(--cyan)} a:focus-visible{outline:3px solid #FFC857;outline-offset:3px}
 .back{font-weight:700;letter-spacing:.1em;text-decoration:none;display:inline-block;margin-bottom:30px}
-h1{font-family:Orbitron,system-ui,sans-serif;font-weight:800;font-size:clamp(28px,6vw,44px);letter-spacing:.04em;margin:0 0 24px;line-height:1.15}
-p{margin:0 0 18px;color:#cfe3f8} p:first-of-type{color:var(--muted)}
+h1,h2{font-family:Orbitron,system-ui,sans-serif;font-weight:800;letter-spacing:.04em;line-height:1.2}
+h1{font-size:clamp(28px,6vw,44px);margin:0 0 24px;line-height:1.15}
+h2{font-size:clamp(20px,4vw,26px);margin:46px 0 14px}
+h3{font-weight:700;font-size:24px;color:var(--cyan);margin:32px 0 8px}
+p,li{color:#cfe3f8} p{margin:0 0 18px} p:first-of-type{color:var(--muted)}
+ul{margin:0 0 18px;padding-left:1.2em} li{margin:0 0 8px}
 strong{color:var(--text);font-weight:700}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.76em;color:var(--cyan);overflow-wrap:anywhere}
+.wrap{overflow-x:auto;margin:0 0 22px}
+table{border-collapse:collapse;width:100%;font-size:18px;line-height:1.4}
+th,td{text-align:left;vertical-align:top;padding:10px 12px 10px 0;border-bottom:1px solid var(--line);color:#cfe3f8}
+th{color:var(--muted);font-weight:700}
+dl{margin:0 0 22px;display:grid;grid-template-columns:minmax(0,22em) minmax(0,1fr);gap:0 24px;font-size:18px;line-height:1.45}
+dt,dd{margin:0;padding:12px 0;border-bottom:1px solid var(--line)}
+dd{color:#cfe3f8}
+@media (max-width:640px){dl{grid-template-columns:minmax(0,1fr)} dt{padding-bottom:2px;border-bottom:0} dd{padding-top:0}}
 </style></head><body><main>
-<a class="back" href="./">← ASCEND</a>
+<a class="back" href="./">&larr; ASCEND</a>
 <h1>ASCEND privacy policy</h1>
-<p>Last updated: 31 October 2026</p>
-<p>ASCEND is a personal habit and self-improvement app.</p>
-<p><strong>What it stores.</strong> Your name, quests, progress, settings, books and rewards are stored only on your phone, in the app&#x27;s private storage. ASCEND has no account system, no server, no advertising and no analytics. Nothing is uploaded.</p>
-<p><strong>Step counting.</strong> If you allow it, ASCEND counts your steps using the step counter built into your phone (Android&#x27;s physical activity permission). It only counts steps. It does not see where you walk, never shares the count and never sends it off the device. You can remove the permission at any time in Android settings, and the app still works: you can type your steps in instead.</p>
-<p><strong>Health Connect.</strong> If you allow it, ASCEND reads steps, distance, sleep (with stages), heart rate, resting heart rate, heart rate variability, blood oxygen and workouts from Android Health Connect, to show them and to complete quests. It only reads this data, never writes it, never shares it and never sends it off the device. You can remove access at any time in Health Connect settings.</p>
-<p><strong>Typed-in numbers.</strong> You can also type in sleep, steps and resting heart rate yourself. They are stored only on your phone, like everything else.</p>
-<p><strong>Backups.</strong> Backup files you create (or that the app saves to Downloads/ASCEND) are ordinary files on your phone. You decide where they go.</p>
-<p><strong>Notifications.</strong> If you turn on the daily reminder, the app posts a local notification. No data leaves your phone.</p>
-<p><strong>Deleting your data.</strong> Uninstalling the app removes its data. Backup files in Downloads/ASCEND are yours to delete.</p>
-<p><strong>Contact.</strong> <a href="https://github.com/techknowledgedev/Ascend-showcase/issues">Open an issue on GitHub</a>.</p>
+<p>Last updated: 14 November 2026</p>
+<p>ASCEND is a private habit game for Android, made by Devesh Agarwal. This page says what the app stores, what it reads from your phone and what it asks Android for.</p>
+<p><strong>The short version.</strong> Everything stays on your phone. ASCEND has no account, no server, no ads and no analytics. It does not have Android&#x27;s internet permission, so it cannot send anything off your phone.</p>
+<h2>What it stores</h2>
+<p>Your name (if you enter one), quests, progress, settings, notes, books and rewards live in one file in the app&#x27;s private storage on your phone, with a backup copy beside it. Nothing is uploaded. Uninstalling the app removes this data.</p>
+<h2>Step counting</h2>
+<p>If you allow it, ASCEND counts steps with your phone&#x27;s built-in step counter (Android&#x27;s physical activity permission). It only counts steps. It does not see where you walk. You can take the permission away at any time in Android settings. The app still works, and you can type your steps in.</p>
+<h2>Health Connect</h2>
+<p>If you allow it, ASCEND reads data from Android Health Connect, only for the types you switch on: steps, distance, sleep, heart rate, resting heart rate, heart rate variability, blood oxygen and workouts. It uses them to show your day and to clear quests.</p>
+<ul><li>ASCEND only reads. It never writes to Health Connect.</li><li>The data is not sold, not shared with anyone and not used for advertising. It is not sent off your phone.</li><li>ASCEND reads recent days only, up to 14, and does not ask for access to older history.</li><li>About once an hour, ASCEND reads the latest numbers in the background, so your day is up to date when you open the app. This uses Health Connect&#x27;s background-read permission.</li><li>You can take access away at any time in Health Connect settings. The app still works, and you can type the numbers in.</li></ul>
+<h2>Numbers you type in</h2>
+<p>You can type in steps, sleep and resting heart rate yourself, for a day or night the phone or a watch did not cover. They are stored only on your phone, like everything else.</p>
+<h2>Reminders</h2>
+<p>Reminders and warnings are notifications made on your phone. Nothing is sent. Android may deliver a reminder a few minutes late to save battery.</p>
+<h2>Backups and reports</h2>
+<p>Backups and the weekly and monthly report PDFs are ordinary files that ASCEND saves in Documents/ASCEND on your phone. Older versions used Downloads/ASCEND. You decide where else to keep them and whether to share them. ASCEND does not upload them.</p>
+<h2>Permissions</h2>
+<p>ASCEND asks Android for the permissions below and no others. This list is checked against the app on every build. ASCEND does not ask for internet, location, contacts, camera, microphone, calendar, phone, SMS or exact alarms.</p>
+<h3>Health Connect, read only</h3>
+<p>You choose which types to switch on. Android asks you before anything is read.</p>
+<dl><dt><code>android.<wbr>permission.<wbr>health.<wbr>READ_STEPS</code></dt><dd>Reads your steps, to show the day and clear step quests.</dd><dt><code>android.<wbr>permission.<wbr>health.<wbr>READ_DISTANCE</code></dt><dd>Reads distance, to show it next to your steps.</dd><dt><code>android.<wbr>permission.<wbr>health.<wbr>READ_SLEEP</code></dt><dd>Reads sleep sessions, to show last night and clear the sleep quest.</dd><dt><code>android.<wbr>permission.<wbr>health.<wbr>READ_HEART_RATE</code></dt><dd>Reads heart rate, to show your average for the day on the Health tab.</dd><dt><code>android.<wbr>permission.<wbr>health.<wbr>READ_RESTING_HEART_RATE</code></dt><dd>Reads resting heart rate, to show it on the Health tab and in the weekly report.</dd><dt><code>android.<wbr>permission.<wbr>health.<wbr>READ_HEART_RATE_VARIABILITY</code></dt><dd>Reads heart rate variability, to show it on the Health tab and in the weekly report.</dd><dt><code>android.<wbr>permission.<wbr>health.<wbr>READ_OXYGEN_SATURATION</code></dt><dd>Reads blood oxygen readings, to show the average in the weekly report.</dd><dt><code>android.<wbr>permission.<wbr>health.<wbr>READ_EXERCISE</code></dt><dd>Reads workout sessions, to show the minutes and the number of workouts for the day.</dd><dt><code>android.<wbr>permission.<wbr>health.<wbr>READ_HEALTH_DATA_IN_BACKGROUND</code></dt><dd>Lets the hourly update read the types above while the app is closed.</dd></dl>
+<h3>The phone</h3>
+<dl><dt><code>android.<wbr>permission.<wbr>ACTIVITY_RECOGNITION</code></dt><dd>Counts steps with the phone&#x27;s own step counter. Asked only if you allow it.</dd><dt><code>android.<wbr>permission.<wbr>POST_NOTIFICATIONS</code></dt><dd>Shows your reminders, warnings and the focus timer.</dd><dt><code>android.<wbr>permission.<wbr>VIBRATE</code></dt><dd>Short vibrations for taps and rewards.</dd><dt><code>android.<wbr>permission.<wbr>RECEIVE_BOOT_COMPLETED</code></dt><dd>Sets your reminders and the hourly update again after the phone restarts.</dd></dl>
+<h3>Added by Android&#x27;s work scheduler</h3>
+<p>ASCEND uses Android&#x27;s work scheduler for the hourly update. The library adds these three on its own. ASCEND does not use the network, and it starts no service of its own.</p>
+<dl><dt><code>android.<wbr>permission.<wbr>WAKE_LOCK</code></dt><dd>Keeps the phone awake for the few seconds the hourly update runs.</dd><dt><code>android.<wbr>permission.<wbr>FOREGROUND_SERVICE</code></dt><dd>Lets the work scheduler run a task as a short service if it ever needs to. ASCEND declares no foreground service of its own.</dd><dt><code>android.<wbr>permission.<wbr>ACCESS_NETWORK_STATE</code></dt><dd>Lets the work scheduler ask whether a network exists before it runs a task that needs one. ASCEND&#x27;s tasks need no network.</dd></dl>
+<h2>Deleting your data</h2>
+<p>Uninstalling the app removes its data. You can also reset your progress inside the app. It saves a copy first, so a mistake can be undone, and that copy is yours to delete too. Backups and reports in Documents/ASCEND are yours to delete. Health Connect data stays in Health Connect, where you manage and delete it.</p>
+<h2>Changes to this policy</h2>
+<p>If this policy changes, the new version is published at this address with a new date.</p>
+<h2>Contact</h2>
+<p>Devesh Agarwal, <a href="mailto:support.techknowledgedev@gmail.com">support.techknowledgedev@gmail.com</a></p>
 </main></body></html>
