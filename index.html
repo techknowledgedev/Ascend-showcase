@@ -159,8 +159,8 @@ section{position:relative;padding:112px 0}
 .lb img.sq{border-radius:28px}
 .lb img.rd{border-radius:50%;border:5px solid #c9a24a;box-shadow:inset 0 0 0 3px rgba(0,0,0,.45)}
 @property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
-.lb .stagebox::before{content:"";position:absolute;inset:-9px;border-radius:50%;padding:4px;pointer-events:none;
-  background:conic-gradient(from var(--a),#3ea8ff,#7a5cff,#ff5470,#ffc94d,#3ee0a8,#3ea8ff);
+.lb .stagebox::before{content:"";position:absolute;inset:-9px;border-radius:50%;padding:3px;pointer-events:none;
+  background:conic-gradient(from var(--a),transparent 0 235deg,rgba(62,168,255,.25) 250deg,#3ea8ff 296deg,#7a5cff 326deg,#ffc94d 350deg,#fff 358deg,transparent 358.5deg);
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
   mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
   filter:drop-shadow(0 0 10px rgba(62,168,255,.7));animation:ring 3.2s linear infinite}
