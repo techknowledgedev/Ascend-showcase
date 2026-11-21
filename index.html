@@ -141,10 +141,11 @@ section{position:relative;padding:112px 0}
 .tile{all:unset;box-sizing:border-box;cursor:zoom-in;display:block;text-align:center;border-radius:12px;padding:10px 6px 12px;transition:transform .25s,background .25s}
 .tile:hover,.tile:focus-visible{transform:translateY(-5px) scale(1.04);background:rgba(13,26,58,.7)}
 .tile:focus-visible{outline:3px solid var(--gold)}
-.tile img{width:100%;aspect-ratio:1;object-fit:cover;filter:drop-shadow(0 0 16px var(--g,rgba(62,168,255,.35)))}
+.tile img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;filter:drop-shadow(0 0 16px var(--g,rgba(62,168,255,.35)))}
 .tile.sq img{border-radius:16px;border:2px solid rgba(255,255,255,.1)}
+.tile.rd img{border-radius:50%;border:3px solid #c9a24a;box-shadow:inset 0 0 0 2px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.12)}
 .tile span{display:block;margin-top:8px;font-size:15px;color:var(--muted);line-height:1.2;font-weight:600}
-.ranks{--w:150px}.coins{--w:170px}.titles{--w:104px}.bosses{--w:132px}.avs{--w:108px}
+.ranks{--w:150px}.coins{--w:170px}.titles{--w:116px}.bosses{--w:132px}.avs{--w:108px}
 .ranks .tile span{font-family:var(--display);font-size:12px;letter-spacing:.24em}
 
 /* lightbox */
@@ -156,6 +157,15 @@ section{position:relative;padding:112px 0}
 .lb .stagebox{position:relative;perspective:900px;width:min(78vw,440px);aspect-ratio:1}
 .lb img{width:100%;height:100%;object-fit:cover;transition:transform .12s ease-out;filter:drop-shadow(0 20px 40px rgba(0,0,0,.6));animation:pop .45s cubic-bezier(.2,1.3,.4,1)}
 .lb img.sq{border-radius:28px}
+.lb img.rd{border-radius:50%;border:5px solid #c9a24a;box-shadow:inset 0 0 0 3px rgba(0,0,0,.45)}
+@property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
+.lb .stagebox::before{content:"";position:absolute;inset:-9px;border-radius:50%;padding:4px;pointer-events:none;
+  background:conic-gradient(from var(--a),#3ea8ff,#7a5cff,#ff5470,#ffc94d,#3ee0a8,#3ea8ff);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  filter:drop-shadow(0 0 10px rgba(62,168,255,.7));animation:ring 3.2s linear infinite}
+.lb .stagebox.sqr::before{border-radius:36px}
+@keyframes ring{to{--a:360deg}}
 @keyframes pop{from{transform:scale(.7);opacity:0}}
 .lb h3{position:relative;font-size:clamp(22px,4vw,32px);letter-spacing:.1em;margin-top:16px}
 .lb p{position:relative;margin:0;color:var(--muted);font-size:21px;max-width:34ch}
@@ -213,6 +223,7 @@ footer a{color:var(--muted)}
   .lb .arr{width:44px;height:44px}
 }
 @media (prefers-reduced-motion:reduce){
+  .lb .stagebox::before{animation:none}
   html{scroll-behavior:auto}
   .hero .phone{animation:none}
   .js .reveal{opacity:1;transform:none;transition:none}
@@ -495,7 +506,7 @@ footer a{color:var(--muted)}
     var host = document.getElementById(id); groups[id] = items;
     items.forEach(function(it, i){
       var b = document.createElement('button');
-      b.className = 'tile' + (it.sq ? ' sq' : ''); b.type = 'button';
+      b.className = 'tile' + (it.sq ? ' sq' : '') + (it.rd ? ' rd' : ''); b.type = 'button';
       b.style.setProperty('--g', it.glow);
       b.setAttribute('aria-label', 'Enlarge ' + it.title);
       b.innerHTML = '<img loading="lazy" decoding="async" width="160" height="160" alt=""><span></span>';
@@ -506,7 +517,7 @@ footer a{color:var(--muted)}
   }
   build('g-ranks', RANKS.map(function(r){return {src:A+'badge_rank_'+r[0]+'.webp',title:r[1],line:r[2],glow:r[3]+'99',label:r[1].toUpperCase()}}));
   build('g-coins', COINS.map(function(c){return {src:A+'coin_'+c[0]+'.webp',title:c[1],line:c[2],glow:c[3]+'88',label:c[1]}}));
-  build('g-titles', TITLES.map(function(t){return {src:A+'badge_title_'+t[0]+'.webp',title:t[1],line:t[2],glow:'rgba(62,168,255,.6)',label:t[1]}}));
+  build('g-titles', TITLES.map(function(t){return {src:A+'badge_title_'+t[0]+'.webp',title:t[1],line:t[2],glow:'rgba(62,168,255,.6)',rd:1,label:t[1]}}));
   build('g-bosses', BOSSES.map(function(b){return {src:A+'boss_'+b[0]+'.webp',title:b[1],line:'A boss for the habit you want to beat.',glow:'rgba(255,84,112,.6)',sq:1,label:b[1].replace('The ','')}}));
   build('g-avs', AVS.map(function(a){return {src:A+'avatar_'+a+'.webp',title:cap(a),line:'An avatar for your hunter.',glow:'rgba(62,168,255,.6)',sq:1,label:cap(a)}}));
 
@@ -516,7 +527,8 @@ footer a{color:var(--muted)}
   var cur = {g:null,i:0,opener:null};
   function show(){
     var it = groups[cur.g][cur.i];
-    li.classList.remove('sq'); if (it.sq) li.classList.add('sq');
+    li.classList.remove('sq','rd'); if (it.sq) li.classList.add('sq'); if (it.rd) li.classList.add('rd');
+    ls.classList.toggle('sqr', !!it.sq);
     li.style.animation = 'none'; void li.offsetWidth; li.style.animation = '';
     li.src = it.src; li.alt = it.title; lt.textContent = it.title; ll.textContent = it.line;
     lh.style.setProperty('--g', it.glow); li.style.transform = '';
